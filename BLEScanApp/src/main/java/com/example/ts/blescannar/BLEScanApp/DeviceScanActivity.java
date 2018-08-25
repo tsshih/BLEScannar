@@ -9,6 +9,7 @@ import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +51,17 @@ public class DeviceScanActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_scan);
         initScanDevice();
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+
+        // store address_name to shared preference
+        SharedPreferences pref = getSharedPreferences("test", MODE_PRIVATE);
+        pref.edit().putString("Device_Address",ViewHolder.deviceAddress.toString()).commit();
+
+        // start connet
     }
 
     private void initScanDevice()
@@ -178,11 +191,11 @@ public class DeviceScanActivity extends ListActivity {
 
             return view;
         }
+    }
 
-        class ViewHolder{
-            TextView deviceAddress;
-            TextView deviceName;
-        }
+    static class ViewHolder{
+        public static TextView deviceAddress;
+        public static TextView deviceName;
     }
 
 }
