@@ -1,0 +1,1 @@
+include ':BLEScanApp', ':app', ':base', ':instantapp'
